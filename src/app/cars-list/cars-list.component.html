@@ -1,0 +1,156 @@
+
+<div class="jumbotron text-center">
+    <app-nav-bar></app-nav-bar>
+    <br><br/>
+
+<div *ngIf="isOrder">
+	<div class="container">
+		<div class="row centered-form">
+			<div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">Confirm your order!</h3>
+					</div>
+					<div class="panel-body">
+						<form role="form">
+					
+
+							<div class="form-group">
+               Selected car :{{currectCar.manufacturer}} {{currectCar.model}}  {{currectCar.manufacturerYear}}
+               <br/>
+              Car ID: {{currectCar.carId}}
+							</div>
+							<div class="form-group">
+								
+							 Gear :{{currectCar.gearType}}
+              </div>
+              <div><img class="img"  src="assets/{{currectCar.picture}}"></div>
+              <br/>
+              <div class="row">
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+										Rent date (today) :	<input id="datefield" type="date" class="form-control input-sm"  value = "{{todayDate}}"  min="{{todayDate}}"  max="{{todayDate}}"
+              #start>
+									
+									</div>
+								</div>
+								<div class="col-xs-6 col-sm-6 col-md-6">
+									<div class="form-group">
+                    How many days?:	<input [(ngModel)]="rentDays" type="number" name="days" placeholder="Only numbers" class="form-control input-sm" min= 0
+                    #days>
+                  </div>
+                 
+                </div>
+                
+              </div>
+              <div><h2> Price:  {{getPrice(rentDays, currectCar.dayValue)}}₪</h2>
+                <small>Late fine (per day): {{currectCar.lateDayValue}}₪</small></div>
+              
+             <br/>
+             
+            
+							<input *ngIf="isLogin && currectCar.availableForRent === 'yes'" type="button" value="Order Now!" class="btn btn-success btn-block" (click)="PostNewRent( start.value, days.value )"
+              >	
+
+              <input *ngIf="!isLogin" type="button" value="Login First!" class="btn btn-info btn-block" (click)="redirectLogin()"
+              >	
+
+              <input *ngIf="currectCar.availableForRent === 'no'" type="button" disabled= "true"  value="The Car is out of stock!" class="btn btn-danger btn-block"
+              >	
+        
+             
+            </form>
+         
+                 
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<input [(ngModel)]="searchText" placeholder="Free Search">
+<br><br/>
+Search by Gear
+<select [(ngModel)]="searchGear" #gear >
+  <option value="" >Clear Search</option>
+  <option value="Automatic">Automatic</option>
+  <option value="Manual">Manual</option>
+  </select>
+ Search by Year
+<select [(ngModel)]="searchYear" #year >
+  <option value="" >Clear Search</option>
+  <option *ngFor= "let i of arrInfoCars | orderby" >{{i.manufacturerYear}}</option>
+
+  </select>
+
+  Search by Manufacturer
+  <select [(ngModel)]="searchManufacturer" #manufacturer >
+    <option value="" >Clear Search</option>
+    <option *ngFor= "let i of arrInfoCars" >{{i.manufacturer }}</option>
+  
+    </select>
+
+    Search by Model
+    <select [(ngModel)]="searchModel" #model >
+      <option value="" >Clear Search</option>
+      <option *ngFor= "let i of arrInfoCars" >{{i.model}}</option>
+    
+      </select>
+
+      
+
+<br><br/>
+<table id="cars" style="width:80%" align="center" >
+ 
+  <tr>
+    <th>Model</th>
+    <th>Manufacturer</th>
+    <th>GearType</th>
+    <th>Year</th>
+    <th>CurrectMileage</th>
+    <th>AvailableForRent</th> 
+    <th>DayValue</th>
+    <th>Picture</th>
+    <th>Order Now</th>
+  </tr>
+  <tr *ngFor= "let i of arrInfoCars  | search : gear.value | search : searchText | search : year.value | search : manufacturer.value | search : model.value " >
+    <td>{{i.model}}</td>
+    <td>{{i.manufacturer}}</td>
+    <td>{{i.gearType}}</td>
+    <td>{{i.manufacturerYear}}</td>
+    <td>{{i.currectMileage}}Km</td>
+   <td>{{i.availableForRent}}</td>
+   <td>{{i.dayValue}} ₪</td>
+   
+   <td><img class="img"  src="assets/{{i.picture}}"></td>
+   <td><img class="orderimg"  src="assets/ordernow.png" (click)="getOrder(i)"></td>
+  </tr>
+  
+
+  
+  
+</table>
+
+<br><br/>
+
+<table id="cars" style="width:80%" align="center" >
+ 
+  <tr>
+    <th>Last view car</th>
+
+  </tr>
+  <tr  >
+    <td>{{localCar.manufacturer}} {{localCar.model}}<img class="img"  src="assets/{{localCar.picture}}" 
+     >
+    </td>
+   
+ 
+  
+  </tr>
+  
+
+  
+  
+</table>

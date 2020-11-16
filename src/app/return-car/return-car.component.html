@@ -1,0 +1,34 @@
+
+<div class="jumbotron text-center">
+  
+  
+	<app-nav-bar></app-nav-bar>
+	<br><br/>
+	<h1 *ngIf="!(role === 'Employee' || role === 'Admin')"> You Don't Have Permission to Access this page!</h1>
+<div  *ngIf="role === 'Employee' || role === 'Admin'" class="container">
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        	<div class="panel panel-default">
+        		<div class="panel-heading">
+			    		<h3 class="panel-title">Please Enter CarID <small>Only Employye!</small></h3>
+			 			</div>
+			 			<div class="panel-body">
+			    		<form role="form">
+			    			
+			    					<div class="form-group">
+			                <input type="number" name="CarId" class="form-control input-sm" placeholder="CarId" #CarId>
+			    				
+			    			</div>
+               
+			    			
+			    			<input type="submit" value="Return"  class="btn btn-info btn-block" (click)= "GetRentInfo(CarId.value)" >
+						
+							
+							<div>{{confirmCarMsg}}</div>
+							      Final Price : {{finalPrice}}
+			    		</form>
+			    	</div>
+	    		</div>
+    		</div>
+    	</div>
+    </div>

@@ -1,0 +1,59 @@
+
+ 
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+  <span class="jumbotron text-center">
+  
+    
+      <h1 class="text-color white">Israel Car Rentals</h1>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+ 
+      <!-- Links -->
+      <ul class="navbar-nav ">
+        <li class="nav-item">
+          <a class="nav-link" href="/home">Home</a>
+        </li>
+        <li  *ngIf="!(role === 'Admin' || role === 'Normal User' || role === 'Employee')" class="nav-item">
+          
+          <a class="nav-link"  href="/login">Login</a>
+        </li>
+        <li  *ngIf="!(role === 'Admin' || role === 'Normal User' || role === 'Employee')" class="nav-item">
+          <a class="nav-link" href="/signup">SignUp</a>
+        </li>
+       
+        <li class="nav-item">
+          <a class="nav-link" href="/cars-list">Search</a>
+        </li>
+        <li *ngIf="role === 'Employee' || role === 'Admin'" class="nav-item">
+          <a  class="nav-link" href="/return-car">Return-Car</a>
+        </li>
+
+        <li *ngIf="role === 'Admin'" class="nav-item">
+          <a  class="nav-link" href="/orders">Edit Orders</a>
+        </li>
+
+        
+        <li *ngIf="role === 'Admin'" class="nav-item">
+          <a  class="nav-link" href="/users">Edit Users</a>
+        </li>
+
+        <li *ngIf="role === 'Admin'" class="nav-item">
+          <a  class="nav-link" href="/edit-stock">Edit Stock</a>
+        </li>
+
+        <li *ngIf="role === 'Admin' || role === 'Normal User' || role === 'Employee'" class="nav-item">
+          <a  class="nav-link" href="/user-orders">My Orders</a>
+        </li>
+      </ul>
+  
+    </nav>
+</span>
+
+<span *ngIf="isLogin">You are logged in as {{currectUser}}! </span> 
+
+<input *ngIf="isLogin" type="button" value="Logout!" (click)="logout()"
+>	

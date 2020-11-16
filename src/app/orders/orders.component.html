@@ -1,0 +1,181 @@
+<div class="jumbotron text-center">
+    <app-nav-bar></app-nav-bar>
+
+
+<br><br/>
+<div *ngIf="isAdd" class="container">
+  <div class="row centered-form">
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Add Rent <small>Only Admin!</small></h3>
+        </div>
+        <div class="panel-body">
+          <form role="form">
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  CarId
+              		<input type="number"  class="form-control input-sm" placeholder="CarId" maxlength="9" #carid
+										oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                {{errormsg}}
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  UserId
+                  <input type="number"  class="form-control input-sm" placeholder="UserId" maxlength="9" #userid
+                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                  {{errormsg}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  Rent Date
+                  <input type="date"  class="form-control input-sm"  value = "{{todayDate}}" min="{{todayDate}}"  max="{{todayDate}}" 
+                    #rentdate>
+                    {{errormsg}}
+                
+                </div>
+              </div>
+              
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  Return Date
+                  <input type="date"  class="form-control input-sm" 
+                    #returndate>
+                    {{errormsg}}
+                </div>
+
+              </div>
+            </div>
+
+           
+            <div class="form-group">
+              Real Return Date
+              <input type="date" class="form-control input-sm" #realreturn>
+              
+            </div>
+           
+            <input type="button" value="Save"  class="btn btn-info btn-block" (click)="addRent(carid.value, userid.value, rentdate.value,returndate.value,realreturn.value)"
+              >
+            {{doneEdit}}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+<div *ngIf="isEdit" class="container">
+  <div class="row centered-form">
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Edit Rent <small>Only Admin!</small></h3>
+        </div>
+        <div class="panel-body">
+          <form role="form">
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  CarId
+              
+                    <input type="number"  class="form-control input-sm" placeholder="UserId" maxlength="9" #carid value="{{currectRent.carId}}"
+                    oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                    {{errormsg}}
+                </div>
+              </div>
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  UserId
+                
+              
+                  <input type="number"  class="form-control input-sm" placeholder="UserId" maxlength="9" #userid value="{{currectRent.userId}}"
+                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">
+                  {{errormsg}}
+                </div>
+
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  Rent Date
+                  <input type="date"  class="form-control input-sm" value="{{currectRent.rentDate}}"
+                    #rentdate>
+                    {{errormsg}}
+                
+                </div>
+              </div>
+              
+              <div class="col-xs-6 col-sm-6 col-md-6">
+                <div class="form-group">
+                  Return Date
+                  <input type="date"  class="form-control input-sm" value="{{currectRent.returnDate}}"
+                    #returndate>
+                    {{errormsg}}
+                </div>
+
+              </div>
+            </div>
+
+           
+            <div class="form-group">
+              Real Return Date
+              <input type="date" value="{{currectRent.realReturnDate}}" class="form-control input-sm" placeholder="Email Address" #realreturn>
+              
+            </div>
+           
+            <input type="button" value="Save"  class="btn btn-info btn-block" (click)="editRent(carid.value, userid.value, rentdate.value,returndate.value,realreturn.value)"
+              >
+            {{doneEdit}}
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<input *ngIf="role === 'Admin'" type="button" value="Add New Order"  class="btn btn-info " (click)="getAdd()"
+>
+<br><br/>
+
+<h1 *ngIf="!( role === 'Admin')"> You Don't Have Permission to Access this page!</h1>
+<table *ngIf="role === 'Admin'"  id="orders" style="width:80%" align="center" >
+ 
+    <tr>
+      <th>RentId</th>
+      <th>CarId</th>
+      <th>RentDate</th>
+      <th>ReturnDate</th>
+      <th>RealReturnDate</th>
+      <th>UserId</th> 
+      <th>Edit</th>
+	<th>Delete</th>
+
+      
+    </tr>
+    <tr *ngFor= "let i of arrRentInfo " >
+      <td>{{i.rentId}}</td>
+      <td>{{i.carId}}</td>
+      <td>{{i.rentDate}}</td>
+      <td>{{i.returnDate}}</td>
+      <td>{{i.realReturnDate}}</td>
+     <td>{{i.userId}}</td>
+     <td><img class="iconimg"  src="assets/edit.png" (click)= "getRent(i)"></td>
+     <td><img class="iconimg"  src="assets/delete.png" (click)= "getDeleteRent(i)"></td>
+     
+    </tr>
+    
+  
+    
+    
+  </table>
+</div>

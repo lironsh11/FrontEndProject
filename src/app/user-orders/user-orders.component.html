@@ -1,0 +1,34 @@
+<div class="jumbotron text-center">
+    <app-nav-bar></app-nav-bar>
+    <br><br/>
+    <br><br/>
+    <table *ngIf="role === 'Admin' || role === 'Normal User' || role === 'Employee'"  id="orders" style="width:80%" align="center" >
+ 
+        <tr>
+          <th>RentId</th>
+          <th>CarId</th>
+          <th>RentDate</th>
+          <th>ReturnDate</th>
+          <th>RealReturnDate</th>
+          <th>UserId</th> 
+     
+    
+          
+        </tr>
+        <tr *ngFor= "let i of arrRentInfo | orderById : currectUser " >
+          <td>{{i.rentId}}</td>
+          <td>{{i.carId}}</td>
+          <td>{{i.rentDate}}</td>
+          <td>{{i.returnDate}}</td>
+          <td>{{i.realReturnDate}}</td>
+         <td>{{i.userId}}</td>
+
+         
+        </tr>
+        
+      
+        
+        
+      </table>
+
+       </div>
